@@ -1,11 +1,13 @@
-# demo1
+# vue-cli-typescript-webpack-demo
 
-> A Vue.js project
+> A Vue.js project with typescript.
 
 ## Init
 
-npm install typescript ts-loader --save
-npm install vue-class-component vue-property-decorator --save
+npm install vue-cli -g  
+vue init webpack projectName  
+npm install typescript ts-loader --save  
+npm install vue-class-component vue-property-decorator --save  
 
 ## Build Setup
 
@@ -25,11 +27,13 @@ npm run build --report
 
 ## Problems
 
-Error 1：Module build failed: TypeError: Cannot read property 'vue' of undefined
-Env: webpack 4.8.x
-Solution： change webpack 4.x => webpack 3.x, ts-loader 4.x => ts-loader 3.x
------------------------------------------------------------------------------------
-
-Error 2: Cannot find module 'webpack/schemas/WebpackOptions.json'
-Env: webpack 3.11.0
-Solution：re-install webpack
+``` bash
+Error 1：Module build failed: TypeError: Cannot read property 'vue' of undefined  
+Env: webpack 4.8.x  
+Solution： change webpack 4.x => webpack 3.x, ts-loader 4.x => ts-loader 3.x  
+```
+``` bash
+Error 2: Cannot find module 'webpack/schemas/WebpackOptions.json'  
+Env: webpack 3.11.0  
+Solution：re-install webpack 
+```
