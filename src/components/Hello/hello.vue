@@ -85,6 +85,7 @@
   </div>
   <div class="footer">
     <router-link class="btn" to="/home">Go Home</router-link>
+    <p>作者：{{ author }}</p>
   </div>
 </div>
 </template>

@@ -7,7 +7,7 @@
             <aside>ASIDE</aside>
 
             <article>
-                <p class="txt">zhoou</p>
+                <p class="txt">{{ author }}</p>
             </article>
 
         </div>

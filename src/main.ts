@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import router from './router/index'
+import store from './store/index'
 
 import '@sass/common.scss'
 
@@ -13,5 +14,6 @@ Vue.component('VFooter', VFooter);
 /* eslint-disable no-new */
 const v = new Vue({
   el: '#app',
-  router
+  router,
+  store
 })
