@@ -1,8 +1,8 @@
 <template>
 <div id="hello">
-  <img src="../assets/logo.png">
+  <img src="../../assets/logo.png">
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1 v-html="msg"></h1>
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -83,37 +83,11 @@
       </li>
     </ul>
   </div>
+  <div class="footer">
+    <router-link class="btn" to="/home">Go Home</router-link>
+  </div>
 </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
-
-export default Vue.extend({
-  name: "HelloWorld",
-  data() {
-    return {
-      msg: "Welcome to Your Vue.js App"
-    };
-  }
-});
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+<style lang="scss" src="./hello.scss"></style>
+<script lang="ts" src="./hello.ts"></script>

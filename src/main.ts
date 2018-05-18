@@ -7,6 +7,9 @@ import '@sass/common.scss'
 
 Vue.config.productionTip = false
 
+import VFooter from '@components/Footer/footer.vue';
+Vue.component('VFooter', VFooter);
+
 /* eslint-disable no-new */
 const v = new Vue({
   el: '#app',
