@@ -4,6 +4,9 @@ import Vue from 'vue'
 import router from './router/index'
 import store from './store/index'
 
+// 引入第三方组件库
+import '@components/ThirdParty/elementUI'
+
 import '@sass/common.scss'
 
 Vue.config.productionTip = false

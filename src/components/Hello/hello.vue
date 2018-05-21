@@ -86,6 +86,7 @@
   <div class="footer">
     <router-link class="btn" to="/home">Go Home</router-link>
     <p>作者：{{ author }}</p>
+    <el-button type="primary">Reference element-ui component library</el-button>
   </div>
 </div>
 </template>
