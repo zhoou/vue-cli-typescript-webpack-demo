@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -62,9 +63,17 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../static'),
         to: config.dev.assetsSubDirectory,
-        ignore: ['.*']
+        // ignore: ['.*']
       }
-    ])
+    ]),
+    new webpack.DllReferencePlugin({
+      context: path.resolve(__dirname, '.'),
+      manifest: require(path.resolve(__dirname, '../static', 'vendor.manifest.json'))
+    }),
+    new AddAssetHtmlPlugin({
+      includeSourcemap: false,
+      filepath: path.resolve(__dirname, '../static', '*.dll.js'),
+    }),
   ]
 })
 

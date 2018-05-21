@@ -3,11 +3,22 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-function resolve (dir) {
+// 消除多余CSS
+const glob = require('glob');
+const PurifyCssPlugin = require('purifycss-webpack');
+
+// happypack config
+const HappyPack = require('happypack')
+const os = require('os')
+const happyThreadPool = HappyPack.ThreadPool({
+  size: os.cpus().length > 4 ? 4 : os.cpus().length
+})
+
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
-
 
 
 module.exports = {
@@ -18,9 +29,8 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].[hash].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ?
+      config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.ts'],
@@ -32,16 +42,16 @@ module.exports = {
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')],
+        use: 'happypack/loader?id=happy-js',
+        // loader: 'babel-loader',
       },
       {
         test: /\.tsx?$/,
@@ -53,7 +63,16 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+        use: 'happypack/loader?id=happy-css',
+        // loader: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'postcss-loader', 'sass-loader']
+          })
+        
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -92,5 +111,23 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('/css/styles.css'),
+    new PurifyCssPlugin({
+      paths: glob.sync(resolve('src/*.html'))
+    }),
+    new HappyPack({
+      id: 'happy-js',
+      loaders: ['babel-loader'],
+      threadPool: happyThreadPool,
+      verbose: true
+    }),
+    new HappyPack({
+      id: 'happy-css',
+      loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+      threadPool: happyThreadPool,
+      verbose: true
+    })
+  ]
 }

@@ -46,3 +46,7 @@ Solution：re-install webpack
 Error 3: "$bg-color: #fefefe;": Invalid CSS after "...load the styles": expected 1 selector or at-rule, was "var content = requi"  
 Solution: Maybe your webpack.base.conf is merged with another config where there is another rule for .scss files.
 ```
+``` bash
+Error 4: Cannot destructure property `createHash` of 'undefined' or 'null'.
+Solution: it's need to update wepback to ^4.3.0 or laster
+```
