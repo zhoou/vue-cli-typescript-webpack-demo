@@ -30,6 +30,78 @@ npm run build
 npm run build --report
 ```
 
+## Webpack Configuration Optimization
+* 1、Remove extra css
+``` bash
+const glob = require('glob');
+const PurifyCssPlugin = require('purifycss-webpack');
+...
+plugins: [
+    ...
+    new PurifyCssPlugin({
+      paths: glob.sync(resolve('src/*.html'))
+    }),
+    ...
+]  
+```
+* 2、[happypack](https://github.com/amireh/happypack)
+``` bash
+const HappyPack = require('happypack')
+const os = require('os')
+const happyThreadPool = HappyPack.ThreadPool({
+  size: os.cpus().length > 4 ? 4 : os.cpus().length
+})
+...
+module: {
+  rules: [
+    ...
+    {
+        test: /\.js$/,
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')],
+        use: 'happypack/loader?id=happy-js',
+        // loader: 'babel-loader',
+    },
+    ...
+  ]
+}
+...
+plugins: [
+    ...
+    new HappyPack({
+      id: 'happy-js',
+      loaders: ['babel-loader'],
+      threadPool: happyThreadPool,
+      verbose: true
+    }),
+    ...
+]
+```
+* 3、webpack.DllPlugin and webpack.DllReferencePlugin  
+(1) create dll.config.  
+reference document： ```build/webpack.dll.conf.js```  
+(2) add plugin to ```build/webpack.dev.conf.js```
+``` bash
+plugins: [
+  ...
+  new webpack.DllReferencePlugin({
+      context: path.resolve(__dirname, '.'),
+      manifest: require(path.resolve(__dirname, '../static', 'vendor.manifest.json'))
+  }),
+  ...
+]
+```  
+(3) add link to html file. (we can use : [add-asset-html-webpack-plugin](https://github.com/SimenB/add-asset-html-webpack-plugin))
+``` bash
+plugins: [
+  ...
+  new AddAssetHtmlPlugin({
+      includeSourcemap: false,
+      filepath: path.resolve(__dirname, '../static', '*.dll.js'),
+  }),
+  ...
+]
+```
+
 ## Problems
 
 ``` bash
