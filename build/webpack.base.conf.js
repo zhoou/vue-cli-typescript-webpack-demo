@@ -38,7 +38,8 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
       '@sass': resolve('src/assets/sass'),
-      '@components': resolve('src/components')
+      '@components': resolve('src/components'),
+      '@methods': resolve('src/methods'),
     }
   },
   module: {
@@ -69,10 +70,9 @@ module.exports = {
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'postcss-loader', 'sass-loader']
-          })
-        
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader']
+        })
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

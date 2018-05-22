@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
+import { setLocalStorage, getLocalStorage } from '@methods/storage'
 
 export default Vue.extend({
   name: "HelloWorld",
@@ -12,5 +13,13 @@ export default Vue.extend({
     ...mapGetters({
       author: 'authorName'
     })
+  },
+  methods: {
+    switchLanguage(key: string, value: string) {
+      if (getLocalStorage(key) !== value) {
+        setLocalStorage(key, value)
+        location.reload();
+      }
+    },
   }
 });

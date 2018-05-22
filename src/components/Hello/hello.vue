@@ -2,7 +2,12 @@
 <div id="hello">
   <img src="../../assets/logo.png">
   <div class="hello">
-    <h1 v-html="msg"></h1>
+    <h1 v-html="$t('welcome')"></h1>
+    <div class="select-language">
+      <a @click="switchLanguage('language', 'zh')" href="javascript:;">中文</a>
+      <span> / </span>
+      <a @click="switchLanguage('language', 'en')" href="javascript:;">EN</a>
+    </div>
     <h2>Essential Links</h2>
     <ul>
       <li>
